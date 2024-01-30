@@ -16,7 +16,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
 
 
 # Application definition
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "django_filters",
     "django_countries",
-    "phone_number_field",
+    "phonenumber_field",
     "apps.common",
     "apps.profiles",
     "apps.ratings",
