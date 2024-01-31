@@ -1,15 +1,16 @@
-import environ
+import logging
+import logging.config
+from django.utils.log import DEFAULT_LOGGING
+
 from pathlib import Path
 import os
 
 from dotenv import load_dotenv
 load_dotenv()
 
-env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR / ".env")
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -17,9 +18,9 @@ environ.Env.read_env(BASE_DIR / ".env")
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
 
 
 # Application definition
@@ -107,12 +108,63 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/staticfiles/"
-STATIC_ROOT = os.path.join(BASE_DIR.parent, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR.parent.parent, "staticfiles")
 STATICFILES_DIR = []
 MEDIA_URL = "/mediafiles/"
-MEDIA_ROOT = os.path.join(BASE_DIR.parent, "mediafiles")
+MEDIA_ROOT = os.path.join(BASE_DIR.parent.parent, "mediafiles")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+try:
+    logging.config.dictConfig({
+        "version": 1,
+        "disable_existing_loggers": False,
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "console",
+                "file",
+            ]
+        },
+        "loggers": {
+            "django": {
+                "handlers": ["console", "file"],
+                "level": "INFO",
+                "propagate": True,
+                "django.server": DEFAULT_LOGGING["loggers"]["django.server"],
+            },
+        },
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+                "formatter": "console",
+            },
+            "file": {
+                "level": "WARNING",
+                "class": "logging.FileHandler",
+                "formatter": "file",
+                "filename": os.path.join(BASE_DIR.parent.parent, "logs/realmaison.log"),
+            },
+            "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
+        },
+        "formatters": {
+            "console": {
+                "format": "%(levelname)s %(asctime)s %(module)s "
+                "%(process)d %(thread)d %(message)s"
+            },
+            "file": {"format": "%(levelname)s %(asctime)s %(module)s "
+                     "%(process)d %(thread)d %(message)s"},
+            "django.server": DEFAULT_LOGGING["formatters"]["django.server"],
+        },
+
+    })
+except Exception as e:
+    print(f"Error during logging configuration: {e}")
+    import traceback
+    traceback.print_exc()
+
+logger = logging.getLogger(__name__)

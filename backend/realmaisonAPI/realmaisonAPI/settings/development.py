@@ -1,14 +1,18 @@
 from .base import *
-SECRET_KEY = env("SECRET_KEY")
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': env('ENGINE'),
-        'NAME':  env('DB_NAME'),
-        'USER': env('DB_USER_NAME'),
-        'PASSWORD': env('DB_PASSWORD'),
-        'PORT': env('PORT'),
-        'HOST': env('HOST')
+        'ENGINE': os.environ.get('ENGINE'),
+        'NAME':  os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER_NAME'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'PORT': os.environ.get('PORT'),
+        'HOST': os.environ.get('HOST')
     }
 }
