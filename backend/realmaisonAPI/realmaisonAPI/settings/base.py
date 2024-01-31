@@ -1,22 +1,25 @@
 import environ
 from pathlib import Path
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 env = environ.Env(DEBUG=(bool, False))
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-environ.Env.read_env(BASE_DIR / ".env")
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = os.environ.get("DEBUG")
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(",")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(",")
 
 
 # Application definition
@@ -67,17 +70,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "realmaisonAPI.wsgi.application"
-
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
