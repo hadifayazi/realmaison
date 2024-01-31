@@ -19,9 +19,9 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("Users must have a first and last name"))
         if not email:
             raise ValueError(_("Users must have an email address"))
-        if email:
-            self.email_validator(self.normalize_email(email))
 
+        email = self.normalize_email(email)
+        self.email_validator(email)
         user = self.model(username=username, first_name=first_name, last_name=last_name, email=email, **extra_fields)
         user.set_password(password)
         extra_fields.setdefault('is_staff', False)
