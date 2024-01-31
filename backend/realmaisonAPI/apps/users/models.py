@@ -67,7 +67,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def get_short_name(self):
-        return self.first
+        return self.first_name.title()
 
     def __str__(self):
         return self.username
