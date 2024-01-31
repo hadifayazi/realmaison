@@ -49,7 +49,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(verbose_name=_("Staff status"), default=False)
     is_superuser = models.BooleanField(verbose_name=_("Superuser status"), default=False)
     is_active = models.BooleanField(verbose_name=_("Active"), default=True)
-    date_join = models.DateTimeField(default=timezone.now, verbose_name=_("Date Joined"))
+    date_joined = models.DateTimeField(default=timezone.now, verbose_name=_("Date Joined"))
 
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
