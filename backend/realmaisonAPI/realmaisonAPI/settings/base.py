@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "apps.users",
     "djoser",
     "rest_framework_simplejwt",
-    "apps.listings",
+    "apps.properties",
 ]
 
 MIDDLEWARE = [
