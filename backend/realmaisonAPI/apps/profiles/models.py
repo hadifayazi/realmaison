@@ -15,7 +15,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, related_name="profile", on_delete=models.CASCADE)
     gender = models.CharField(max_length=20, verbose_name=_('Gender'), choices=Gender.choices, default="")
-    phone_number = PhoneNumberField(verbose_name=_("Phone number"), max_length=30)
+    phone_number = PhoneNumberField(verbose_name=_("Phone number"), max_length=30, default='')
     country = CountryField(verbose_name=_('Country'), blank=True, default='FR')
     city = models.CharField(max_length=100, verbose_name=_('City'), blank=True, null=True)
     about_me = models.TextField(verbose_name=_("About me"), default="", blank=True, null=True)
