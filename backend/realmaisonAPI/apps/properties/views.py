@@ -5,6 +5,7 @@ from .models import Property
 from .pagination import PropertyPagination
 from .serializers import PropertySerializer
 
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -30,3 +31,13 @@ class PropertyFilter(django_filters.FilterSet):
     class Meta:
         model = Property
         fields = ['house_type', 'sale_type', 'price', 'city', 'country']
+
+
+class AllPropertiesList(generics.ListAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertySerializer
+    pagination_class = PropertyPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = PropertyFilter
+    search_fields = ('reference', 'country', 'city')
+    ordering_fields = ('list_date')
