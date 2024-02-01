@@ -25,7 +25,7 @@ class Profile(models.Model):
     is_seller = models.BooleanField(default=False, verbose_name=_("Seller"))
     is_agent = models.BooleanField(default=False, verbose_name=_("Agent"))
     rating = models.DecimalField(verbose_name=_("Rating"), decimal_places=2, max_digits=5, null=True)
-    nb_views = models.PositiveIntegerField(default=0, verbose_name=_("Number of views"), null=True, blank=True)
+    nb_reviews = models.PositiveIntegerField(default=0, verbose_name=_("Number of reviews"), null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username} Profile"
