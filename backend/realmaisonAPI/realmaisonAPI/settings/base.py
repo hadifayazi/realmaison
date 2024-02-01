@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "djoser",
     "rest_framework_simplejwt",
     "apps.properties",
+    "apps.enquiries",
 ]
 
 MIDDLEWARE = [
