@@ -1,7 +1,7 @@
 from django_countries.serializer_fields import CountryField
 from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
-from .models import Property
+from .models import Property, PropertyViews
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -14,3 +14,9 @@ class PropertySerializer(serializers.ModelSerializer):
 
     def get_user(self, obj):
         return obj.user.username
+
+
+class PropertyViewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PropertyViews
+        fields = '__all__'

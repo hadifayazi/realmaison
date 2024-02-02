@@ -7,6 +7,7 @@ from .serializers import PropertySerializer
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
+from rest_framework.decorators import APIView
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
@@ -41,3 +42,16 @@ class AllPropertiesList(generics.ListAPIView):
     filterset_class = PropertyFilter
     search_fields = ('reference', 'country', 'city')
     ordering_fields = ('list_date')
+
+
+class RealtorPropertiesList(generics.ListAPIView):
+    serializer_class = PropertySerializer
+    permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = PropertyPagination
+    filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
+    filterset_class = PropertyFilter
+    search_fields = ('reference', 'country', 'city')
+    ordering_fields = ('list_date')
+
+    def get_queryset(self):
+        return Property.objects.filter(user=self.request.user).order_by('-list_date')
