@@ -1,7 +1,7 @@
 from django_countries.serializer_fields import CountryField
 from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
-from .models import Property, PropertyViews
+from .models import Property, PropertyViews, ListingImage
 
 
 class PropertySerializer(serializers.ModelSerializer):
@@ -20,3 +20,18 @@ class PropertyViewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = PropertyViews
         fields = '__all__'
+
+
+class ListingImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ListingImage
+        fields = ('id', 'image', 'property')
+
+    def create(self, validated_data):
+        """
+        Override the create method to associate the image with the property.
+        """
+        property_instance = validated_data.get('property')
+        image = validated_data.get('image')
+        listing_image = ListingImage.objects.create(property=property_instance, image=image)
+        return listing_image

@@ -3,13 +3,14 @@ import django_filters
 
 from .models import Property, PropertyViews
 from .pagination import PropertyPagination
-from .serializers import PropertySerializer, PropertyViewsSerializer
+from .serializers import PropertySerializer, PropertyViewsSerializer, ListingImageSerializer
 
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import APIView
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from django.shortcuts import get_object_or_404
 
 
@@ -115,3 +116,21 @@ class PropertyCreate(generics.CreateAPIView):
             logger.info(
                 f"User {user.username}, created property: ${serializer.data['title']}, reference: {serializer.data.get('reference')}")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteProperty(generics.DestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    lookup_field = 'slug'
+
+    def get_queryset(self):
+        return Property.objects.all()
+
+    def destroy(self, request, *args, **kwargs):
+        property = self.get_object()
+        if property.user != self.request.user:
+            raise PermissionDenied("You do not have permission to delete this property.")
+
+        property.delete()
+
+        return Response({"message": "Property deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
