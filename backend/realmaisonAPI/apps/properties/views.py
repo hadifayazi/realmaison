@@ -134,3 +134,23 @@ class DeleteProperty(generics.DestroyAPIView):
         property.delete()
 
         return Response({"message": "Property deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
+
+class PropertyPhotosUploadView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    parser_classes = (MultiPartParser, FormParser)
+    serializer_class = ListingImageSerializer
+
+    def create(self, request, *args, **kwargs):
+        property_slug = kwargs.get('slug')
+        property_instance = Property.objects.get(slug=property_slug)
+
+        if property_instance.user != request.user:
+            return Response({"detail": "You do not have permission to upload photos for this property."},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        serializer = ListingImageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(property=property_instance)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
