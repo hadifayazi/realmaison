@@ -154,3 +154,56 @@ class PropertyPhotosUploadView(generics.CreateAPIView):
             serializer.save(property=property_instance)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class PropertySearchView(APIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = PropertySerializer
+
+    def post(self, request, *args, **kwargs):
+        queryset = Property.objects.filter(is_published=True)
+        data = request.data
+
+        house_type = data['house_type'].lower()
+        queryset = queryset.filter(house_type__iexact=house_type)
+
+        sale_type = data['sale_type'].lower()
+        queryset = queryset.filter(sale_type__iexact=sale_type)
+
+        price = data['price']
+        price = data['bedrooms']
+        if price == '0+':
+            price = 0
+        elif price == '$50000+':
+            price = 50000
+        elif price == '$150000+':
+            price = 150000
+        elif price == '$250000+':
+            price = 250000
+        elif price == '350000+':
+            price = 4
+        elif price == '350000+':
+            price = 5
+        elif price == '450000+':
+            price = 450000
+        queryset = queryset.filter(price__gte=price)
+
+        bedrooms = data['bedrooms']
+        if bedrooms == '0+':
+            bedrooms = 0
+        elif bedrooms == '1+':
+            bedrooms = 1
+        elif bedrooms == '2+':
+            bedrooms = 2
+        elif bedrooms == '3+':
+            bedrooms = 3
+        elif bedrooms == '4+':
+            bedrooms = 4
+        elif bedrooms == '5+':
+            bedrooms = 5
+        elif bedrooms == '6+':
+            bedrooms = 6
+        queryset = queryset.filter(bedrooms__gte=bedrooms)
+
+        serializer = PropertySerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
