@@ -13,10 +13,10 @@ User = get_user_model()
 @api_view(["POST"])
 @permission_classes([permissions.IsAuthenticated])
 def create_agent_review(request, profile_id):
-    user = request.user
-    profile = get_object_or_404(Profile, id=profile_id)
+    rater = request.user
+    agent = get_object_or_404(Profile, id=profile_id)
     serializer = RatingSerializer(data=request.data)
     if serializer.is_valid():
-        serializer.save(user=user, profile=profile)
+        serializer.save(rater=rater, agent=agent)  # Use correct field names
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
