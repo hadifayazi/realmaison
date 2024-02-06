@@ -41,7 +41,7 @@ class Property(models.Model):
                              verbose_name=_("Agent, Seller, Client"))
     title = models.CharField(max_length=150,  verbose_name=_("Title"))
     slug = AutoSlugField(populate_from="title", max_length=200, unique=True, always_update=True)
-    referece = models.CharField(verbose_name=_("Referece"), max_length=200, blank=True, unique=True)
+    reference = models.CharField(verbose_name=_("Reference "), max_length=200, blank=True, unique=True)
     description = models.TextField(verbose_name=_("Description"), blank=True)
     country = CountryField(verbose_name=_("Country"), default="FR", blank_label=_("Select Country"))
     address = models.CharField(verbose_name=_("Address"), max_length=200)
@@ -79,3 +79,16 @@ class Property(models.Model):
         if not self.reference:
             self.reference = self.generate_reference()
         super().save(*args, **kwargs)
+
+
+class PropertyViews(models.Model):
+    ip = models.GenericIPAddressField(verbose_name=_("IP Address"))
+    date = models.DateTimeField(default=timezone.now)
+    property = models.ForeignKey(Property, on_delete=models.CASCADE, related_name="property_views")
+
+    def __str__(self):
+        return f"{self.property.title} - {self.date}, total views: {self.property.views}"
+
+    class Meta:
+        verbose_name = _('Total Property View')
+        verbose_name_plural = _('Total Property Views')
