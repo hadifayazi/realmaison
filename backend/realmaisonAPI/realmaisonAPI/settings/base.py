@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "django_filters",
     "django_countries",
     "phonenumber_field",
-    "apps.common",
     "apps.profiles",
     "apps.ratings",
     "apps.users",
