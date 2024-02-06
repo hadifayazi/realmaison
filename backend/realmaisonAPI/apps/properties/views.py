@@ -90,7 +90,6 @@ class PropertyUpdate(generics.UpdateAPIView):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        print('**************', self.kwargs.get('slug'))
         slug = self.kwargs.get('slug')
         property = get_object_or_404(Property, slug=slug)
         if property.user != self.request.user:

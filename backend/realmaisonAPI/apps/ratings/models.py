@@ -23,5 +23,5 @@ class Rating(models.Model):
     class Meta:
         unique_together = (("rater", "agent"),)
 
-        def __str__(self):
-            return f"{self.agent} rated {self.rating}"
+    def __str__(self):
+        return f"{self.agent} rated {self.rating}"

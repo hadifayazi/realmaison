@@ -7,7 +7,7 @@ class RatingSerializer(serializers.ModelSerializer):
     agent = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
-        model: Rating
+        model = Rating
         fields = "__all__"
 
     def get_rater(self, obj: Rating):
