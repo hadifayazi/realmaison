@@ -90,10 +90,12 @@ class PropertyUpdate(generics.UpdateAPIView):
     lookup_field = 'slug'
 
     def get_queryset(self):
-        property = get_object_or_404(Property, slug=self.kwargs.get('slug'))
+        print('**************', self.kwargs.get('slug'))
+        slug = self.kwargs.get('slug')
+        property = get_object_or_404(Property, slug=slug)
         if property.user != self.request.user:
             raise PermissionDenied("You do not have permission to update this property.")
-        return property
+        return Property.objects.filter(slug=slug)
 
     def update(self, request, *args, **kwargs):
         property = self.get_object()
