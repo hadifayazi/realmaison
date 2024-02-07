@@ -8,7 +8,7 @@ export const propertiesApi = createApi({
       headers.append(
         "Authorization",
         "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA3MzM2MTY5LCJpYXQiOjE3MDczMjg5NjksImp0aSI6IjJmYTQ3MzcyM2NhZTRlMTA5YTI1ZmE1YTk5NmMzNWIyIiwidXNlcl9pZCI6OH0.fD4qGjontct3snUbWiEV_0Wt2FjTNF1qaI5RQwPrMt8"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA3MzQzNDkzLCJpYXQiOjE3MDczMzYyOTMsImp0aSI6IjM5N2FjODExNDhmMzQ4OWViYjcwYmU0YWVjNzA2Y2JlIiwidXNlcl9pZCI6OH0.QNR7szdcG9TUhCpDsGyIRLA3mKD8acs7fekLk9pC3yI"
       );
 
       return headers;
@@ -33,8 +33,24 @@ export const propertiesApi = createApi({
         };
       },
     }),
+    addProperty: builder.mutation({
+      query: (property) => {
+        console.log(property);
+        return {
+          url: "create",
+          method: "POST",
+          body: {
+            property,
+          },
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetPropertiesQuery, useGetRealtorPropertiesQuery } =
-  propertiesApi;
+export const {
+  useGetPropertiesQuery,
+  useGetRealtorPropertiesQuery,
+  useAddPropertyMutation,
+} = propertiesApi;
