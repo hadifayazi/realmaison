@@ -59,6 +59,15 @@ export const propertiesApi = createApi({
         };
       },
     }),
+    getProperty: builder.query({
+      query: (property) => {
+        return {
+          url: `details/${property["slug"]}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
@@ -67,4 +76,5 @@ export const {
   useGetRealtorPropertiesQuery,
   useAddPropertyMutation,
   useUpdatePropertyMutation,
+  useGetPropertyQuery,
 } = propertiesApi;
