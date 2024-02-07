@@ -46,6 +46,19 @@ export const propertiesApi = createApi({
         };
       },
     }),
+    updateProperty: builder.mutation({
+      query: (property) => {
+        console.log(property);
+        return {
+          url: `update/${property["slug"]}`,
+          method: "PUT",
+          body: {
+            property,
+          },
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
@@ -53,4 +66,5 @@ export const {
   useGetPropertiesQuery,
   useGetRealtorPropertiesQuery,
   useAddPropertyMutation,
+  useUpdatePropertyMutation,
 } = propertiesApi;
