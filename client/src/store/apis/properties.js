@@ -68,6 +68,15 @@ export const propertiesApi = createApi({
         };
       },
     }),
+    deleteProperty: builder.mutation({
+      query: (property) => {
+        return {
+          url: `delete/${property["slug"]}`,
+          method: "DELETE",
+          credentials: "include",
+        };
+      },
+    }),
   }),
 });
 
@@ -77,4 +86,5 @@ export const {
   useAddPropertyMutation,
   useUpdatePropertyMutation,
   useGetPropertyQuery,
+  useDeletePropertyMutation,
 } = propertiesApi;
