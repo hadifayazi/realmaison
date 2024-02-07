@@ -1,5 +1,14 @@
 import React from "react";
+import RootLayout from "./hocs/RootLayout";
 
-export const App = () => {
-  return <div>App</div>;
+const App = () => {
+  return (
+    <div>
+      <RootLayout>
+        <div>this is</div>
+      </RootLayout>
+    </div>
+  );
 };
+
+export default App;
