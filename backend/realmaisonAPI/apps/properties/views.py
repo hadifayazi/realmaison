@@ -98,7 +98,8 @@ class PropertyUpdate(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         property = self.get_object()
-        serializer = PropertySerializer(property, data=request.data, partial=True)
+        updated_data = request.data.get('property', {})
+        serializer = PropertySerializer(property, data=updated_data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -111,7 +112,8 @@ class PropertyCreate(generics.CreateAPIView):
 
     def create(self, request, *args, **kwargs):
         user = request.user
-        serializer = PropertySerializer(data=request.data)
+        property_data = request.data.get('property', {})
+        serializer = PropertySerializer(data=property_data)
         if serializer.is_valid():
             serializer.save(user=user)
             logger.info(
