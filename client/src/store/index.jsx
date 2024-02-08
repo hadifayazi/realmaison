@@ -23,4 +23,5 @@ export {
   useUpdatePropertyMutation,
   useGetPropertyQuery,
   useDeletePropertyMutation,
+  useGetPorpertyDetailsQuery,
 } from "./apis/properties";
