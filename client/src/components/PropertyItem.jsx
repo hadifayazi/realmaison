@@ -1,28 +1,58 @@
 import { useNavigate } from "react-router-dom";
-import Card from "react-bootstrap/Card";
+import { Col, Row, Badge, Card, Button, CardTitle } from "react-bootstrap";
+import { FaShower, FaBed, FaChartArea } from "react-icons/fa";
+
+const spansStyle = {
+  marginRight: "5px",
+};
 
 const PropertyItem = ({ property }) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/details/${property.slug}`); // Use history.push to navigate to the "/details" route
+    navigate(`/details/${property.slug}`);
   };
 
   return (
-    <Card style={{ width: "18rem" }}>
-      <Card.Img variant="top" src="https://picsum.photos/300/300/?blur" />
+    <Card style={{ width: "18rem", position: "relative" }}>
+      <Badge className="position-absolute start-100 top-0 translate-middle rounded-pill ">
+        {property.sale_type}
+      </Badge>
+      <Card.Img variant="top" src={property.images[0].image} />
+      <CardTitle>{property.price}€</CardTitle>
       <Card.Body>
-        <Card.Title>{property.title}</Card.Title>
-        <Card.Text>
-          <p className="customParagraph">
-            {property.country},{property.city}
-          </p>
-          <p className="customParagraph">Surface: {property.surface}</p>
-          <p className="customParagraph">Bedrooms: {property.bedrooms}</p>
-          <p className="customParagraph">Price: {property.price}</p>
-          <h6>{property.sale_type}</h6>
+        <Card.Title as="h4">
+          <strong>{property.title}</strong>
+        </Card.Title>
+        <Card.Text as="p">
+          {property.description.substring(0, 100)}...
         </Card.Text>
-        <button onClick={handleClick}>Take a look</button>
+        <hr />
+        <Row>
+          <Col style={{ display: "flex", justifyContent: "space-evenly" }}>
+            <span>
+              <FaBed style={spansStyle} />
+              {property.bedrooms}
+            </span>
+            <span>
+              <FaShower style={spansStyle} />
+              {property.bathrooms}
+            </span>
+            <span>
+              <FaChartArea style={spansStyle} />
+              {property.surface}m²
+            </span>
+          </Col>
+        </Row>
+        <hr />
+        <Button
+          style={{
+            backgroundColor: "#da0c81",
+          }}
+          onClick={handleClick}
+        >
+          More info
+        </Button>
       </Card.Body>
     </Card>
   );
