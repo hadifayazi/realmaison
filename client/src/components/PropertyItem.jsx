@@ -18,7 +18,16 @@ const PropertyItem = ({ property }) => {
       <Badge className="position-absolute start-100 top-0 translate-middle rounded-pill ">
         {property.sale_type}
       </Badge>
-      <Card.Img variant="top" src={property.images[0].image} />
+      <Card.Img
+        style={{ width: "100%", height: "200px" }}
+        variant="top"
+        src={
+          property.images.length > 0
+            ? property.images[0].image
+            : "default-image-url"
+        }
+      />
+
       <CardTitle>{property.price}€</CardTitle>
       <Card.Body>
         <Card.Title as="h4">
