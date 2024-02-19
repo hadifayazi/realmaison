@@ -8,7 +8,7 @@ export const propertiesApi = createApi({
       headers.append(
         "Authorization",
         "Bearer " +
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA3MzYwNTAxLCJpYXQiOjE3MDczNTMzMDEsImp0aSI6ImE2MjEzMWY0OTQxYTQ5YzhiOGZiOTUwMGVhNWMxZWVmIiwidXNlcl9pZCI6OH0.m1Uj7AA7XREEB7Oa-i9JJHDltPfXxsfAx8GOq3MvYv0"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MzU4NDI0LCJpYXQiOjE3MDgzNTEyMjQsImp0aSI6Ijk3M2M0Zjk2ZThjMzRhYTA4YTlkMjhkNWE1ZjYwMWMzIiwidXNlcl9pZCI6OH0.Wv-eTEjI87vHfJQ5YSoDxAbCAx-Zl7kkBdCuFXMTI0o"
       );
 
       return headers;
@@ -23,6 +23,7 @@ export const propertiesApi = createApi({
           credentials: "include",
         };
       },
+      refetchOnMount: "ifStale",
     }),
     getRealtorProperties: builder.query({
       query: () => {

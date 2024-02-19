@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import RootLayout from "./hocs/RootLayout";
+import { HelmetProvider } from "react-helmet-async";
 import PropertiesPage from "./pages/PropertiesPage";
 import AboutUs from "./components/AboutUs";
 import PropertyDetails from "./components/PropertyDetails";
@@ -24,7 +25,11 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
+  );
 };
 
 export default App;

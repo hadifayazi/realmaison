@@ -7,6 +7,11 @@ class PropertyAdmin(admin.ModelAdmin):
                     'bedrooms', 'bathrooms', 'house_type', 'surface', 'sale_type')
     list_filter = ('country', 'city', 'sale_type', 'price')
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == 'images':
+            kwargs['queryset'] = ListingImage.objects.none()
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
     # def is_published(self, obj):
     #     return obj.get('is_published')
 

@@ -1,13 +1,75 @@
 body {
+  height: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.background {
+  height: 100%;
+}
+
+.logo {
+  color: #da0c81;
+  border: 2px white solid;
+  outline: 3px solid #da0c81;
+  padding: 1px 15px;
+  border-radius: 50%;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.first-section {
+  background-image: url("../public/assets/sean-pollock-PhYq704ffdA-unsplash.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  max-width: 100%;
+  min-height: 550px;
+  flex: 1;
+}
+.invite {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 15px;
+}
+
+.invite-intro {
+  color: white;
+  background-color: black;
+  opacity: 60%;
+  padding: 20px 100px;
+}
+.invite-btn {
+  background-color: #da0c81;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 10px;
+}
+
+.second-section {
+  background-color: #b4b4b3;
+  display: flex;
+  max-width: 100%;
+  min-height: 550px;
+  border: 4px green solid;
+  flex: 1;
+}
+
+.section2-items {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.customParagraph {
+  margin-bottom: 2px;
 }

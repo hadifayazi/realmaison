@@ -1,4 +1,4 @@
-from collections.abc import Iterable
+
 import random
 import string
 from autoslug import AutoSlugField
